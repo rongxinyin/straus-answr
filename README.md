@@ -1,2 +1,2 @@
-# DR-Analytic-dash
-Start to develop a tool as DR analytics.
+# flexload-dash
+Start to develop a tool as flexible building load analytics.

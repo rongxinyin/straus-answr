@@ -1,2 +1,2 @@
-# flexload-dash
-Start to develop a tool as flexible building load analytics.
+# Flow ANSAR Heat Pump Demonstration at Straus
+System controller development and measurement & verification work.

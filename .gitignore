@@ -103,3 +103,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 straus/data
+straus/performance/__pycache__
+# Pyre type checker
+.pyre/
+straus/performance/output
+straus/performance/plots
+straus/performance/data
+
+.DS_Store

@@ -21,7 +21,7 @@ def setup_argument_parser():
     data_group.add_argument(
         '--data-folder', '-d',
         type=str,
-        default='/data/',
+        default='./data/',
         help='Path to folder containing CSV files (default: /data/)')
     
     data_group.add_argument(
@@ -49,7 +49,7 @@ class ACPowerDataProcessor:
         Parse all CSV files from the data folder
         """
         # Get all CSV files in the data folder
-        csv_files = glob.glob(os.path.join(self.data_folder, "*.csv"))
+        csv_files = glob.glob(os.path.join(self.data_folder, "*157Z.csv"))
         
         if not csv_files:
             print(f"No CSV files found in {self.data_folder}")
@@ -71,6 +71,27 @@ class ACPowerDataProcessor:
                 
             except Exception as e:
                 print(f"Error reading {file_path}: {str(e)}")
+        
+        return self.raw_dataframes
+    
+    # Parse a spefici csv file as raw data
+    def parse_csv_file(self, file_path):
+        """
+        Parse a single CSV file and extract equipment ID
+        """
+        try:
+            # Extract filename from path
+            filename = os.path.basename(file_path)
+            equipment_id = self._extract_equipment_id(filename)
+            
+            # Read CSV file
+            df = pd.read_csv(file_path)
+            self.raw_dataframes[equipment_id] = df
+            
+            print(f"Successfully loaded: {filename} -> Equipment ID: {equipment_id}")
+            
+        except Exception as e:
+            print(f"Error reading {file_path}: {str(e)}")
         
         return self.raw_dataframes
     
@@ -343,6 +364,7 @@ def main():
     # Step 1: Parse all CSV files
     print("Step 1: Parsing CSV files...")
     processor.parse_all_csv_files()
+    # processor.parse_csv_file(os.path.join(data_folder, "zira/readings_(Roof Top AC 1_20876)_2025-07-03T04_14_06.775Z.csv"))
     
     # Step 2: Clean and standardize data
     print("\nStep 2: Cleaning and standardizing data...")
